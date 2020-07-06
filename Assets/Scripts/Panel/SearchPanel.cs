@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Database;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class SearchPanel : MonoBehaviour, IPanel
     public Button btnSearch;
     public InputField inpCaseNumber;
     public LocationPanel locationPanel;
+    public LogPanel logPanel;
 
     public void ProcessInfo()
     {
@@ -19,8 +21,12 @@ public class SearchPanel : MonoBehaviour, IPanel
         }
         else
         {
+            var newCase = UIManager.Instance.CreateCase(myText, "ONENT");
 
-            UIManager.Instance.CreateCase(myText, "ONENT");
+            Database database = new Database();
+
+            database.InsertLog(newCase);
+
             locationPanel.gameObject.SetActive(true);
         }
     }

@@ -31,13 +31,15 @@ namespace Assets.Scripts
             _instance = new UIManager();
         }
 
-        public void CreateCase(string caseNumber, string fullName)
+        public Case CreateCase(string caseNumber, string fullName)
         {
             myCase = new Case
             {
                 CaseNo = caseNumber,
                 FullName = fullName
             };
+
+            return myCase;
         }
     }
 }
