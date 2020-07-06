@@ -20,7 +20,7 @@ public class LocationPanel : MonoBehaviour, IPanel
         fullName.text = UiManager.Instance.myCase.ServiceName;
 
         ISearchService searchService = new SearchService(new Repository<SearchLog>(UiManager.Instance.DataContext));
-        var logs = searchService.GetLogs();
+        var logs = searchService.GetLogs().OrderByDescending(en=> en.Id);
 
         var logText = logs.Aggregate(string.Empty, (current, searchLog) => current + $"{searchLog.Id} - {searchLog.Text} - {searchLog.ServiceName}\n");
 

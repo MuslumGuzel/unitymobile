@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Domain.Services;
 using Assets.Scripts.Models;
+using Assets.Scripts.Utility;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,10 +14,13 @@ public class SearchPanel : MonoBehaviour, IPanel
     public InputField inpCaseNumber;
     public LocationPanel locationPanel;
     public LogPanel logPanel;
+    private ConnectionTester _connectionTester;
+    public Text FeedbackText;
 
     public void ProcessInfo()
     {
         var myText = inpCaseNumber.text;
+
         if (string.IsNullOrEmpty(myText))
         {
             Debug.LogWarning("Input alanı boş geçilemez.");
@@ -26,18 +30,33 @@ public class SearchPanel : MonoBehaviour, IPanel
             var newCase = UiManager.Instance.CreateCase(myText, "ONENT");
 
             ISearchService searchService = new SearchService(new Repository<SearchLog>(UiManager.Instance.DataContext));
-            if (Application.internetReachability == NetworkReachability.NotReachable)
-            {
-                newCase.Text = "Internet Connection is not available";
-                searchService.InsertSearchLog(newCase);
 
-            }
-            else
-            {
-                searchService.InsertSearchLog(newCase);
-            }
+            _connectionTester = ConnectionTester
+                .GetInstance(gameObject)
+                .ipToTest("www.google.com");
 
-            locationPanel.gameObject.SetActive(true);
+
+            ShowFeedback("Starting test");
+            // Internet connection checked basically
+            //if (Application.internetReachability == NetworkReachability.NotReachable)
+            //{
+            //    newCase.Text = "Internet Connection is not available";
+            //}
+            _connectionTester.TestInternet(hasInternet =>
+            {
+                if (hasInternet)
+                {
+                    searchService.InsertSearchLog(newCase);
+
+                    locationPanel.gameObject.SetActive(true);
+                }
+                ShowFeedback($"Has internet connection: {hasInternet}");
+            });
+        }
+
+        void ShowFeedback(string text)
+        {
+            FeedbackText.text = text;
         }
     }
 
