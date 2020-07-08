@@ -1,43 +1,43 @@
 ﻿using Assets.Scripts.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Assets.Scripts.Database;
 using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class UIManager : MonoBehaviour
+    public sealed class UiManager : MonoBehaviour
     {
-        private static UIManager _instance;
+        public static UiManager Instance => UiManagerSingleton.instance;
 
-        public static UIManager Instance
+        public DataContext DataContext { get; }
+
+        private UiManager()
         {
-            get
-            {
-                if (_instance == null)
-                {
-                    Debug.LogWarning("Instance not found");
-                }
-                return _instance;
-            }
+            DataContext = new DataContext("tempDatabase.db");
+            DataContext.CreateDB();
         }
 
         public Case myCase;
 
-        public void Awake()
-        {
-            _instance = new UIManager();
-        }
 
-        public void CreateCase(string caseNumber, string fullName)
+        public Case CreateCase(string caseNumber, string fullName)
         {
             myCase = new Case
             {
-                CaseNo = caseNumber,
-                FullName = fullName
+                Text = caseNumber,
+                ServiceName = fullName
             };
+
+            return myCase;
+        }
+        private class UiManagerSingleton
+        {
+            // Explicit static constructor to tell C# compiler
+            // not to mark type as beforefieldinit
+            static UiManagerSingleton()
+            {
+            }
+
+            internal static readonly UiManager instance = new UiManager();
         }
     }
 }
