@@ -24,6 +24,7 @@ public class SearchPanel : MonoBehaviour, IPanel
         if (string.IsNullOrEmpty(myText))
         {
             Debug.LogWarning("Input alanı boş geçilemez.");
+            ShowFeedback("Input alanı boş geçilemez.");
         }
         else
         {
