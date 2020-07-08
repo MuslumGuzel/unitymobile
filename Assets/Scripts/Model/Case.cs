@@ -9,8 +9,8 @@ namespace Assets.Scripts.Model
     [System.Serializable]
     public class Case
     {
-        public string CaseNo { get; set; }
+        public string Text { get; set; }
 
-        public string FullName { get; set; }
+        public string ServiceName { get; set; }
     }
 }

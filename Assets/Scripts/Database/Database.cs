@@ -67,7 +67,7 @@ namespace Assets.Scripts.Database
             {
                 dbconn.Open();
                 dbcmd = dbconn.CreateCommand();
-                sqlQuery = string.Format($"insert into SearchLog (caseNo, fullName) values (\"{caseObject.CaseNo}\",\"{caseObject.FullName}\")");
+                sqlQuery = string.Format($"insert into SearchLog (caseNo, fullName) values (\"{caseObject.Text}\",\"{caseObject.ServiceName}\")");
                 dbcmd.CommandText = sqlQuery;
                 dbcmd.ExecuteScalar();
                 dbconn.Close();

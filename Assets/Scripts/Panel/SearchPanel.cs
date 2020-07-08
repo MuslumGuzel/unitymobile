@@ -2,6 +2,8 @@
 using Assets.Scripts.Database;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Domain.Services;
+using Assets.Scripts.Models;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,11 +23,19 @@ public class SearchPanel : MonoBehaviour, IPanel
         }
         else
         {
-            var newCase = UIManager.Instance.CreateCase(myText, "ONENT");
+            var newCase = UiManager.Instance.CreateCase(myText, "ONENT");
 
-            Database database = new Database();
+            ISearchService searchService = new SearchService(new Repository<SearchLog>(UiManager.Instance.DataContext));
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                newCase.Text = "Internet Connection is not available";
+                searchService.InsertSearchLog(newCase);
 
-            database.InsertLog(newCase);
+            }
+            else
+            {
+                searchService.InsertSearchLog(newCase);
+            }
 
             locationPanel.gameObject.SetActive(true);
         }
