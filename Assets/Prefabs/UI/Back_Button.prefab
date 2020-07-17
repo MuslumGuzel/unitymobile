@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 4020864923809345762}
   - component: {fileID: 8708542793853500797}
   - component: {fileID: 3038468788309251588}
+  - component: {fileID: 3258328294848560895}
   m_Layer: 5
   m_Name: Back_Button
   m_TagString: Untagged
@@ -197,8 +198,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: eb979cce122c3ec4d8df31ddadac295d, type: 3}
-        m_MethodName: set_name
+      - m_Target: {fileID: 11500000, guid: 06e829ce22616d4409036b0ba97d373a, type: 3}
+        m_MethodName: 
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -208,3 +209,15 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3258328294848560895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6721403297361667103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06e829ce22616d4409036b0ba97d373a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
